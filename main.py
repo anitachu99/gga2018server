@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, jsonify
 app = Flask(__name__)
-
+TOTAL_VOTES = 50
 global_events = {
     "event_1": 0,
     "event_2": 0,
@@ -10,7 +10,15 @@ global_events = {
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    global global_events
+    global TOTAL_VOTES
+    multiplier = 100
+    context_dict = {
+        "event_1_percent": round(global_events["event_1"]/TOTAL_VOTES * multiplier, 0),
+        "event_2_percent": round(global_events["event_2"]/TOTAL_VOTES * multiplier, 0),
+        "event_3_percent": round(global_events["event_3"]/TOTAL_VOTES * multiplier, 0)
+    }
+    return render_template("index.html", **context_dict)
 
 
 @app.route("/event-1", methods=["POST"])
