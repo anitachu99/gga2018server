@@ -53,18 +53,24 @@ def get_votes():
 def reset_event_1():
     global global_events
     global_events["event-1"] = 0
+    print(global_events)
+    return redirect("/")
 
 
 @app.route("/_reset-event2")
 def reset_event_2():
     global global_events
     global_events["event-2"] = 0
+    print(global_events)
+    return redirect("/")
 
 
 @app.route("/_reset-event3")
 def reset_event_3():
     global global_events
     global_events["event-3"] = 0
+    print(global_events)
+    return redirect("/")
 
 
 @app.route("/_reset-all-events")
