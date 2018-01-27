@@ -1,56 +1,92 @@
 from flask import Flask, request, render_template, redirect, jsonify
 app = Flask(__name__)
 
+global_events = {
+    "event-1": 0,
+    "event-2": 0,
+    "event-3": 0
+}
 
-event_1 = 0
-event_2 = 0
-event_3 = 0
 
 @app.route('/')
 def index():
     return render_template("index.html")
 
 
-@app.route("/event-1", methods = ["POST"])
+@app.route("/event-1", methods=["POST"])
 def set_event_1():
+    event_name = "event-1"
     if request.method == "POST":
-        print("Is true? {}".format(request.form["event-1"] is not None))
-        if request.form["event-1"] is not None:
-            global event_1
-            event_1 += 1
-            print("Event-1: {}".format(event_1))
+        if request.form[event_name] is not None:
+            set_event(event_name)
+            print(global_events)
     return redirect("/")
 
 
-@app.route("/event-2", methods = ["POST"])
+@app.route("/event-2", methods=["POST"])
 def set_event_2():
+    event_name = "event-2"
     if request.method == "POST":
-        if request.form["event-2"] is not None:
-            global event_2
-            event_2 += 1
+        if request.form[event_name] is not None:
+            set_event(event_name)
+            print(global_events)
     return redirect("/")
 
 
-@app.route("/event-3", methods = ["POST"])
+@app.route("/event-3", methods=["POST"])
 def set_event_3():
+    event_name = "event-3"
     if request.method == "POST":
-        if request.form["event-3"] is not None:
-            global event_3
-            event_3 += 1
+        if request.form[event_name] is not None:
+            set_event(event_name)
+            print(global_events)
     return redirect("/")
 
 
-@app.route("/get-data", methods = ["GET"])
+@app.route("/get-data", methods=["GET"])
 def get_votes():
-    global event_1
-    global event_2
-    global event_3
-    vote_value_pairs = {
-        "event-1": event_1,
-        "event-2": event_2,
-        "event-3": event_3
-    }
-    return jsonify(**vote_value_pairs)
+    global global_events
+    return jsonify(**global_events)
+
+
+@app.route("/_reset-event1")
+def reset_event_1():
+    global global_events
+    global_events["event-1"] = 0
+
+
+@app.route("/_reset-event2")
+def reset_event_2():
+    global global_events
+    global_events["event-2"] = 0
+
+
+@app.route("/_reset-event3")
+def reset_event_3():
+    global global_events
+    global_events["event-3"] = 0
+
+
+@app.route("/_reset-all-events")
+def reset_all_events():
+    """
+    This function should not be publicly invoked!
+    """
+    global global_events
+    global_events = global_events.fromkeys(global_events.keys(), 0)
+    print(global_events)
+    return redirect("/")
+
+
+def set_event(name):
+    """
+    Increments the event based on the name if the key exists
+    """
+    global global_events
+    if name in global_events:
+        global_events[name] += 1
+    else:
+        global_events[name] = 0
 
 
 if __name__ == '__main__':
