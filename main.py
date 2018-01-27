@@ -2,9 +2,9 @@ from flask import Flask, request, render_template, redirect, jsonify
 app = Flask(__name__)
 
 global_events = {
-    "event-1": 0,
-    "event-2": 0,
-    "event-3": 0
+    "event_1": 0,
+    "event_2": 0,
+    "event_3": 0
 }
 
 
@@ -15,7 +15,7 @@ def index():
 
 @app.route("/event-1", methods=["POST"])
 def set_event_1():
-    event_name = "event-1"
+    event_name = "event_1"
     if request.method == "POST":
         if request.form[event_name] is not None:
             set_event(event_name)
@@ -25,7 +25,7 @@ def set_event_1():
 
 @app.route("/event-2", methods=["POST"])
 def set_event_2():
-    event_name = "event-2"
+    event_name = "event_2"
     if request.method == "POST":
         if request.form[event_name] is not None:
             set_event(event_name)
@@ -35,7 +35,7 @@ def set_event_2():
 
 @app.route("/event-3", methods=["POST"])
 def set_event_3():
-    event_name = "event-3"
+    event_name = "event_3"
     if request.method == "POST":
         if request.form[event_name] is not None:
             set_event(event_name)
@@ -52,7 +52,7 @@ def get_votes():
 @app.route("/_reset-event1")
 def reset_event_1():
     global global_events
-    global_events["event-1"] = 0
+    global_events["event_1"] = 0
     print(global_events)
     return redirect("/")
 
@@ -60,7 +60,7 @@ def reset_event_1():
 @app.route("/_reset-event2")
 def reset_event_2():
     global global_events
-    global_events["event-2"] = 0
+    global_events["event_2"] = 0
     print(global_events)
     return redirect("/")
 
@@ -68,7 +68,7 @@ def reset_event_2():
 @app.route("/_reset-event3")
 def reset_event_3():
     global global_events
-    global_events["event-3"] = 0
+    global_events["event_3"] = 0
     print(global_events)
     return redirect("/")
 
