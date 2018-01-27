@@ -1,14 +1,11 @@
-from flask import Flask, render_template, redirect
-app = Flask(__name__)
+from flask import Flask
+APP = Flask(__name__)
 
 
-@app.route('/')
+@APP.route("/")
 def index():
-    """
-    Returns the index of the function.
-    """
     return "TODO"
 
 
-if __name__ == '__main__':
-  app.run()
+if __name__ == "__main__":
+    APP.run(debug=True)
